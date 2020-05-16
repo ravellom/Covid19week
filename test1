@@ -1,0 +1,13 @@
+#Extraer subconjunto de cov2, columnas prov y mun,  haciendo un conteo por municipio 
+sel_lineas <- cov2 %>% group_by(fecha_confirmacion) %>% 
+  summarise(n = n()) %>% subset(n > 5)
+
+## Para gráfico circular
+## Extraer subconjunto de cov2, columnas prov y mun,  haciendo un conteo por municipio 
+cov3 <- cov2[,5:6] %>% group_by(provincia, municipio) %>% 
+  summarise(n = n()) %>% subset(n > 5, na.rm = TRUE)
+data <- data.frame(
+  individual = cov3$municipio,
+  group = cov3$provincia,
+  value = cov3$n
+)
